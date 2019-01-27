@@ -38,7 +38,26 @@ class Person:
             self.hp = 0
         return self.hp
 
+    def get_hp(self):
+        return self.hp
 
+    def get_maxhp(self):
+        return self.maxhp
+
+    def get_mp(self):
+        return self.mp
+
+    def get_maxmp(self):
+        return self.maxmp
+
+    def reduce_mp(self, cost):
+        self.mp -= cost
+
+    def get_spell_name(self, i):
+        return self.magic[i]["name"]
+
+    def get_spell_mp_cost(self, i):
+        return self.magic[i]["cost"]
 
 
 
