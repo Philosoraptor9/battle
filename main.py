@@ -31,7 +31,11 @@ while running:
     if index == 0:
         damage = player.generate_damage()
         enemy.take_damage(damage)
+        print("=============================")
         print("You attacked for ", damage, " damage.")
+        print("Enemy HP: ", bcolors.FAIL + str(enemy.get_hp()) + "/" + str(enemy.get_maxhp()) + bcolors.ENDC + "\n")
+
+        print("Your HP: ", bcolors.OKGREEN + str(player.get_hp()) + "/" + str(player.get_maxhp()) + bcolors.ENDC)
     elif index == 1:
         player.choose_magic()
         magic_choice = int(input("Choose Magic: ")) - 1
@@ -46,8 +50,13 @@ while running:
             continue
 
         player.reduce_mp(spell.cost)
-        enemy.take_damage(magic_damage)
-        print(bcolors.OKBLUE + "\n" + spell.name + " deals", str(magic_damage), " points of damage!" + bcolors.ENDC)
+
+        if spell.type == "white":
+            player.heal(magic_damage)
+            print(bcolors.OKBLUE + "\n" + spell.name + " heals for ",  str(magic_damage), " HP" + bcolors.ENDC)
+        elif spell.type == "black":
+            enemy.take_damage(magic_damage)
+            print(bcolors.OKBLUE + "\n" + spell.name + " deals", str(magic_damage), " points of damage!" + bcolors.ENDC)
 
         print("=============================")
         print("Enemy HP: ", bcolors.FAIL + str(enemy.get_hp()) + "/" + str(enemy.get_maxhp()) + bcolors.ENDC + "\n")
