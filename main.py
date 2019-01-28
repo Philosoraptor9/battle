@@ -2,6 +2,14 @@ from classes.game import Person, bcolors
 from classes.magic import Spell
 from classes.inventory import Item
 
+print("\n\n")
+print("NAME:                  HP:                                MP:")
+print("                       _________________________         __________")
+print(bcolors.BOLD + "Thanos:       " +
+      "460/460 |" + bcolors.OKGREEN + "█████████████████████████" + bcolors.ENDC + bcolors.BOLD +
+      "|" +
+      " 65/65 |" + bcolors.OKBLUE + "██████████" + bcolors.ENDC + bcolors.BOLD + "|")
+print("\n\n")
 
 # Create black magic.py
 fire = Spell("Fire", 10, 100, "black")
@@ -24,7 +32,11 @@ super_elixir = Item("Super Elixir", "elixir", "Fully restores whole party's HP/M
 grenade = Item("Grenade", "attack", "Explodes to deal 500 damage", 500)
 
 player_spells = [fire, thunder, blizzard, meteor, quake, cure, heal]
-player_items = [potion, hi_potion, super_potion, elixir, grenade]
+player_items = [{"item": potion, "quantity": 5},
+                {"item": hi_potion, "quantity": 3},
+                {"item": super_potion, "quantity": 1},
+                {"item": elixir, "quantity": 1},
+                {"item": grenade, "quantity": 3}]
 
 # Instantiate people
 player = Person(460, 65, 60, 34, player_spells, player_items)
@@ -87,11 +99,24 @@ while running:
         if item_choice == -1:
             continue
 
-        item = player.items[item_choice]
+        item = player.items[item_choice]["item"]
+
+        if player.items[item_choice]["quantity"] == 0:
+            print(bcolors.FAIL + "\n" + "None left..." + bcolors.ENDC)
+            continue
+
+        player.items[item_choice]["quantity"] -= 1
 
         if item.type == "potion":
             player.heal(item.prop)
             print(bcolors.OKGREEN + "\n" + item.name + " heals for ", str(item.prop), " HP" + bcolors.ENDC)
+        elif item.type == "elixir":
+            player.hp = player.maxhp
+            player.mp = player.maxmp
+            print(bcolors.OKGREEN + "\n" + item.name + " fully restores HP & MP" + bcolors.ENDC)
+        elif item.type == "attack":
+            enemy.take_damage(item.prop)
+            print(bcolors.FAIL + "\n" + item.name + " deals ", str(item.prop), " points of damage" + bcolors.ENDC)
 
     enemy_choice = 1
 
