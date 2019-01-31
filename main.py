@@ -36,9 +36,10 @@ player_items = [{"item": potion, "quantity": 5},
                 {"item": grenade, "quantity": 3}]
 
 # Instantiate people
-player1 = Person("Thanos", 460, 65, 60, 34, player_spells, player_items)
-player2 = Person("Rhanos", 460, 65, 60, 34, player_spells, player_items)
-enemy = Person("Bad Guy", 1200, 65, 45, 25, [], [])
+player1 = Person("Icarus", 460, 65, 60, 34, player_spells, player_items)
+player2 = Person("Malachi", 460, 65, 60, 34, player_spells, player_items)
+enemy = Person("Thanos", 1200, 65, 45, 25, [], [])
+enemy2 = Person("Grom", 1200, 65, 45, 25, [], [])
 
 players = [player1, player2]
 
