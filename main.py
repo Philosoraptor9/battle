@@ -76,6 +76,10 @@ while running:
             print("=============================")
             print("You attacked " + enemies[enemy].name + " for ", damage, " damage.")
 
+            if enemies[enemy].get_hp() == 0:
+                print(enemies[enemy].name.replace(" ", "") + " has died!")
+                del enemies[enemy]
+
         elif index == 1:
             player.choose_magic()
             magic_choice = int(input("Choose Magic: ")) - 1
@@ -97,11 +101,16 @@ while running:
             if spell.type == "white":
                 player.heal(magic_damage)
                 print(bcolors.OKBLUE + "\n" + spell.name + " heals for ",  str(magic_damage), " HP" + bcolors.ENDC)
+
             elif spell.type == "black":
                 enemy = player.choose_target(enemies)
                 enemies[enemy].take_damage(magic_damage)
                 print(bcolors.OKBLUE + "\n" + spell.name + " deals", str(magic_damage),
                       " points of damage to " + enemies[enemy].name + bcolors.ENDC)
+
+                if enemies[enemy].get_hp() == 0:
+                    print(enemies[enemy].name.replace(" ", "") + " has died!")
+                    del enemies[enemy]
 
             print("=============================")
             print("Enemy HP: ", bcolors.FAIL + str(enemies[enemy].get_hp()) + "/" + str(enemies[enemy].get_maxhp()) + bcolors.ENDC + "\n")
@@ -140,8 +149,13 @@ while running:
             elif item.type == "attack":
                 enemy = player.choose_target(enemies)
                 enemies[enemy].take_damage(item.prop)
+
                 print(bcolors.FAIL + "\n" + item.name + " deals ", str(item.prop),
                       " points of damage to " + enemies[enemy].name + bcolors.ENDC)
+
+                if enemies[enemy].get_hp() == 0:
+                    print(enemies[enemy].name.replace(" ", "") + " has died!")
+                    del enemies[enemy]
 
     enemy_choice = 1
     target = random.randrange(len(players))
